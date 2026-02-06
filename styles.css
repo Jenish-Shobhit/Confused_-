@@ -1,0 +1,504 @@
+/* ===== CSS Variables ===== */
+:root {
+    --primary-pink: #ff6b9d;
+    --secondary-pink: #ffc2d1;
+    --accent-red: #ff4757;
+    --light-pink: #ffe5ec;
+    --white: #ffffff;
+    --text-dark: #2d3436;
+    --text-light: #636e72;
+    --shadow: rgba(255, 107, 157, 0.3);
+    --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --romantic-gradient: linear-gradient(135deg, #ff6b9d 0%, #ffc2d1 50%, #ff4757 100%);
+}
+
+/* ===== Reset & Base Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #ffeef8 0%, #ffe5f1 50%, #ffd6e8 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ===== Animated Hearts Background ===== */
+.hearts-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.hearts-background::before,
+.hearts-background::after {
+    content: '💕';
+    position: absolute;
+    font-size: 30px;
+    animation: float 15s infinite;
+    opacity: 0.3;
+}
+
+.hearts-background::before {
+    left: 10%;
+    top: -50px;
+    animation-delay: 0s;
+}
+
+.hearts-background::after {
+    content: '💖';
+    left: 80%;
+    top: -50px;
+    animation-delay: 7s;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.3;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* ===== Container ===== */
+.container {
+    max-width: 600px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== Card Styles ===== */
+.card {
+    background: white;
+    border-radius: 30px;
+    padding: 50px 40px;
+    box-shadow: 0 20px 60px rgba(255, 107, 157, 0.2);
+    display: none;
+    animation: fadeIn 0.6s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 107, 157, 0.1) 0%, transparent 70%);
+    animation: pulse 4s infinite;
+}
+
+.card.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.3;
+    }
+}
+
+/* ===== Card Header ===== */
+.card-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    background: var(--romantic-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.greeting {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: var(--primary-pink);
+    margin-bottom: 15px;
+}
+
+.subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    color: var(--text-light);
+    font-weight: 300;
+}
+
+/* ===== Card Body ===== */
+.card-body {
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== Input Styles ===== */
+.input-label {
+    display: block;
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+    font-weight: 400;
+}
+
+.romantic-input {
+    width: 100%;
+    padding: 18px 25px;
+    border: 2px solid var(--secondary-pink);
+    border-radius: 50px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
+    margin-bottom: 25px;
+}
+
+.romantic-input:focus {
+    border-color: var(--primary-pink);
+    box-shadow: 0 0 0 4px rgba(255, 107, 157, 0.1);
+    transform: translateY(-2px);
+}
+
+.romantic-input::placeholder {
+    color: var(--text-light);
+}
+
+/* ===== Button Styles ===== */
+.romantic-button {
+    width: 100%;
+    padding: 18px 40px;
+    background: var(--romantic-gradient);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.romantic-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.romantic-button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.romantic-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(255, 107, 157, 0.4);
+}
+
+.romantic-button:active {
+    transform: translateY(-1px);
+}
+
+/* ===== Romantic Text ===== */
+.romantic-text {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.romantic-text.small {
+    font-size: 0.95rem;
+    color: var(--text-light);
+}
+
+/* ===== Game Rules ===== */
+.game-rules {
+    background: linear-gradient(135deg, #fff5f8 0%, #ffe9f0 100%);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.rules-list {
+    list-style: none;
+    margin: 20px 0;
+}
+
+.rules-list li {
+    padding: 15px 0;
+    font-size: 1rem;
+    color: var(--text-dark);
+    border-bottom: 1px solid rgba(255, 107, 157, 0.2);
+}
+
+.rules-list li:last-child {
+    border-bottom: none;
+}
+
+.rules-list strong {
+    color: var(--primary-pink);
+}
+
+/* ===== Game Choices ===== */
+.game-choices {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.choice-button {
+    background: white;
+    border: 3px solid var(--secondary-pink);
+    border-radius: 20px;
+    padding: 30px 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-width: 140px;
+    position: relative;
+    overflow: hidden;
+}
+
+.choice-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--romantic-gradient);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.choice-button:hover::before {
+    opacity: 0.1;
+}
+
+.choice-button:hover {
+    border-color: var(--primary-pink);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
+}
+
+.choice-icon {
+    font-size: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.choice-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-dark);
+    position: relative;
+    z-index: 1;
+}
+
+/* ===== Result Styles ===== */
+.result-content {
+    text-align: center;
+}
+
+.game-result {
+    margin-bottom: 40px;
+}
+
+.choice-display {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 30px 0;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.player-choice,
+.computer-choice {
+    text-align: center;
+}
+
+.player-choice p,
+.computer-choice p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.choice-icon-large {
+    font-size: 5rem;
+    display: block;
+    animation: bounceIn 0.6s ease;
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.vs {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-pink);
+}
+
+.final-message {
+    background: linear-gradient(135deg, #fff5f8 0%, #ffe9f0 100%);
+    border-radius: 20px;
+    padding: 40px 30px;
+    margin-bottom: 30px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+    animation: fadeIn 0.8s ease-in-out 0.3s both;
+}
+
+.final-message.win {
+    background: linear-gradient(135deg, #f0fff4 0%, #e6f9f0 100%);
+    border: 2px solid #48bb78;
+}
+
+.final-message.lose {
+    background: linear-gradient(135deg, #fff5f5 0%, #ffe9e9 100%);
+    border: 2px solid #fc8181;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+    .card {
+        padding: 40px 30px;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .greeting {
+        font-size: 2rem;
+    }
+
+    .choice-button {
+        min-width: 110px;
+        padding: 25px 20px;
+    }
+
+    .choice-icon {
+        font-size: 2.5rem;
+    }
+
+    .choice-icon-large {
+        font-size: 4rem;
+    }
+
+    .final-message {
+        font-size: 1.1rem;
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    .card {
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .greeting {
+        font-size: 1.8rem;
+    }
+
+    .game-choices {
+        flex-direction: column;
+    }
+
+    .choice-button {
+        width: 100%;
+    }
+
+    .choice-display {
+        flex-direction: column;
+    }
+}

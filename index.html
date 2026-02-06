@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Destiny</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="hearts-background"></div>
+    
+    <div class="container">
+        <!-- Step 1: Name Input -->
+        <div class="card active" id="nameCard">
+            <div class="card-header">
+                <h1 class="title">💕 Valentine's Destiny 💕</h1>
+                <p class="subtitle">Let fate guide your heart...</p>
+            </div>
+            <div class="card-body">
+                <label for="userName" class="input-label">What's your name, lovely?</label>
+                <input type="text" id="userName" class="romantic-input" placeholder="Enter your name...">
+                <button class="romantic-button" onclick="app.submitName()">Continue</button>
+            </div>
+        </div>
+
+        <!-- Step 2: Confusion Acknowledgment -->
+        <div class="card" id="confusionCard">
+            <div class="card-header">
+                <h2 class="greeting">Ahhh <span id="userName1"></span>...</h2>
+                <p class="subtitle">It seems you have a problem choosing your Valentine 💭</p>
+            </div>
+            <div class="card-body">
+                <p class="romantic-text">Don't worry, the universe has a way of showing us the path...</p>
+                <label for="crushName" class="input-label">Enter the name of the person you're thinking about:</label>
+                <input type="text" id="crushName" class="romantic-input" placeholder="Their name...">
+                <button class="romantic-button" onclick="app.submitCrush()">Reveal My Destiny</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Game Introduction -->
+        <div class="card" id="gameIntroCard">
+            <div class="card-header">
+                <h2 class="title">✨ Let's Resolve This ✨</h2>
+                <p class="subtitle">A simple game of Rock, Paper, Scissors will decide...</p>
+            </div>
+            <div class="card-body">
+                <div class="game-rules">
+                    <p class="romantic-text">Here's how destiny works:</p>
+                    <ul class="rules-list">
+                        <li>🏆 <strong>If you win:</strong> They're perfect for you!</li>
+                        <li>💔 <strong>If you lose:</strong> Time to let them go...</li>
+                    </ul>
+                    <p class="romantic-text small">Trust the universe, <span id="userName2"></span> 💫</p>
+                </div>
+                <button class="romantic-button" onclick="app.startGame()">I'm Ready</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Game Play -->
+        <div class="card" id="gameCard">
+            <div class="card-header">
+                <h2 class="title">Choose Your Move</h2>
+                <p class="subtitle">For <span id="crushName1"></span> 💖</p>
+            </div>
+            <div class="card-body">
+                <div class="game-choices">
+                    <button class="choice-button" onclick="app.playGame('rock')">
+                        <span class="choice-icon">✊</span>
+                        <span class="choice-text">Rock</span>
+                    </button>
+                    <button class="choice-button" onclick="app.playGame('paper')">
+                        <span class="choice-icon">✋</span>
+                        <span class="choice-text">Paper</span>
+                    </button>
+                    <button class="choice-button" onclick="app.playGame('scissors')">
+                        <span class="choice-icon">✌️</span>
+                        <span class="choice-text">Scissors</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5: Result -->
+        <div class="card" id="resultCard">
+            <div class="card-header">
+                <h2 class="title" id="resultTitle"></h2>
+            </div>
+            <div class="card-body">
+                <div class="result-content">
+                    <div class="game-result">
+                        <div class="choice-display">
+                            <div class="player-choice">
+                                <p>You chose:</p>
+                                <span class="choice-icon-large" id="playerChoice"></span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="computer-choice">
+                                <p>Destiny chose:</p>
+                                <span class="choice-icon-large" id="computerChoice"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="final-message" id="finalMessage"></div>
+                    <button class="romantic-button" onclick="app.restart()">Start Over</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
