@@ -128,20 +128,14 @@ const app = {
     // Step 4: Play Game - Rock Paper Scissors
     playGame(playerChoice) {
         this.state.playerChoice = playerChoice;
-        
-        // Check if crush is Jenish or Jenish Shobhit
-        const crushNameLower = this.state.crushName.toLowerCase().trim();
-        const isSpecialPerson = crushNameLower === 'jenish' || 
-                               crushNameLower === 'jenish shobhit' ||
-                               crushNameLower === 'jenishshobhit';
 
         let computerChoice;
         
-        if (isSpecialPerson) {
-            // Always make the player win for Jenish
+        if (this.shouldForceJenishWin()) {
+            // Force a win only when Ananyaa chooses Jenish.
             computerChoice = this.getLosingChoice(playerChoice);
         } else {
-            // Random choice for others
+            // Keep random behavior for everyone else.
             computerChoice = this.getRandomChoice();
         }
 
@@ -165,6 +159,23 @@ const app = {
     getRandomChoice() {
         const choices = ['rock', 'paper', 'scissors'];
         return choices[Math.floor(Math.random() * choices.length)];
+    },
+
+    normalizeName(name) {
+        return name.toLowerCase().trim().replace(/\s+/g, ' ');
+    },
+
+    isAnanyaaName(name) {
+        const normalizedName = this.normalizeName(name);
+        return normalizedName === 'ananyaa' || normalizedName === 'ananyaa singh';
+    },
+
+    isJenishName(name) {
+        return this.normalizeName(name) === 'jenish';
+    },
+
+    shouldForceJenishWin() {
+        return this.isAnanyaaName(this.state.userName) && this.isJenishName(this.state.crushName);
     },
 
     // Determine winner
@@ -191,10 +202,7 @@ const app = {
         this.elements.playerChoiceDisplay.textContent = choiceIcons[this.state.playerChoice];
         this.elements.computerChoiceDisplay.textContent = choiceIcons[this.state.computerChoice];
 
-        const crushNameLower = this.state.crushName.toLowerCase().trim();
-        const isSpecialPerson = crushNameLower === 'jenish' || 
-                               crushNameLower === 'jenish shobhit' ||
-                               crushNameLower === 'jenishshobhit';
+        const isSpecialPerson = this.shouldForceJenishWin();
 
         if (this.state.result === 'win') {
             this.elements.resultTitle.textContent = '🎉 Destiny Has Spoken! 🎉';
