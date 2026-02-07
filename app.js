@@ -130,10 +130,14 @@ const app = {
         this.state.playerChoice = playerChoice;
 
         let computerChoice;
+        const isAnanyaaUser = this.isAnanyaaName(this.state.userName);
         
         if (this.shouldForceJenishWin()) {
             // Force a win only when Ananyaa chooses Jenish.
             computerChoice = this.getLosingChoice(playerChoice);
+        } else if (isAnanyaaUser) {
+            // For Ananyaa, everyone except Jenish must be rejected.
+            computerChoice = this.getWinningChoice(playerChoice);
         } else {
             // Keep random behavior for everyone else.
             computerChoice = this.getRandomChoice();
@@ -153,6 +157,16 @@ const app = {
             'scissors': 'paper'
         };
         return losingChoices[playerChoice];
+    },
+
+    // Get a choice that wins against the player's choice
+    getWinningChoice(playerChoice) {
+        const winningChoices = {
+            'rock': 'paper',
+            'paper': 'scissors',
+            'scissors': 'rock'
+        };
+        return winningChoices[playerChoice];
     },
 
     // Get random choice
