@@ -3,113 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Day Destiny</title>
+    <meta name="theme-color" content="#8f1f4b">
+    <meta name="description" content="Rosefire Oracle: a flirty romantic destiny game.">
+    <link rel="manifest" href="manifest.webmanifest">
+    <title>Rosefire Oracle</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
 </head>
-<body>
-    <div class="hearts-background"></div>
-    
-    <div class="container">
-        <!-- Step 1: Name Input -->
-        <div class="card active" id="nameCard">
-            <div class="card-header">
-                <h1 class="title">💕 Valentine's Destiny 💕</h1>
-                <p class="subtitle">Let fate guide your heart...</p>
-            </div>
-            <div class="card-body">
-                <label for="userName" class="input-label">What's your name, lovely?</label>
-                <input type="text" id="userName" class="romantic-input" placeholder="Enter your name...">
-                <button class="romantic-button" onclick="app.submitName()">Continue</button>
-            </div>
-        </div>
+<body data-mode="spicy">
+    <a class="skip-link" href="#nameCard">Skip to game</a>
 
-        <!-- Step 2: Confusion Acknowledgment -->
-        <div class="card" id="confusionCard">
-            <div class="card-header">
-                <h2 class="greeting">Ahhh <span id="userName1"></span>...</h2>
-                <p class="subtitle">It seems you have a problem choosing your Valentine 💭</p>
-            </div>
-            <div class="card-body">
-                <p class="romantic-text">Don't worry, the universe has a way of showing us the path...</p>
-                <label for="crushName" class="input-label">Enter the name of the person you're thinking about:</label>
-                <input type="text" id="crushName" class="romantic-input" placeholder="Their name...">
-                <button class="romantic-button" onclick="app.submitCrush()">Reveal My Destiny</button>
-            </div>
-        </div>
+    <div class="scene-layer" aria-hidden="true">
+        <div class="color-orb orb-a"></div>
+        <div class="color-orb orb-b"></div>
+        <div class="color-orb orb-c"></div>
+        <div class="hearts-background" id="heartsBackground"></div>
+        <div class="particle-layer" id="particleLayer"></div>
+    </div>
 
-        <!-- Step 3: Game Introduction -->
-        <div class="card" id="gameIntroCard">
+    <main class="oracle-app" id="appRoot">
+        <header class="hero">
+            <p class="hero-tag">Rosefire Oracle • 2.0</p>
+            <h1 class="hero-title">Where your blush meets its prophecy</h1>
+            <p class="hero-copy">No scoreboards. No pressure. Just one dangerously romantic ritual to find out who deserves your stolen glances tonight.</p>
+            <p class="hero-whisper">Kisses are optional. Spark is mandatory.</p>
+
+            <div class="control-row" aria-label="Experience controls">
+                <div class="mode-switch" role="radiogroup" aria-label="Flirt mode">
+                    <button class="mode-btn" type="button" data-mode="sweet" role="radio" aria-checked="false">Sweet</button>
+                    <button class="mode-btn active" type="button" data-mode="spicy" role="radio" aria-checked="true">Spicy</button>
+                    <button class="mode-btn" type="button" data-mode="chaotic" role="radio" aria-checked="false">Chaotic</button>
+                </div>
+                <div class="utility-controls">
+                    <button class="utility-btn" id="muteToggle" type="button" aria-pressed="false">Sound: On</button>
+                    <button class="utility-btn" id="contrastToggle" type="button" aria-pressed="false">High Contrast</button>
+                    <button class="utility-btn" id="motionToggle" type="button" aria-pressed="false">Reduce Motion</button>
+                </div>
+            </div>
+        </header>
+
+        <section class="card active" id="nameCard" data-step="1" aria-labelledby="nameTitle">
             <div class="card-header">
-                <h2 class="title">✨ Let's Resolve This ✨</h2>
-                <p class="subtitle">A simple game of Rock, Paper, Scissors will decide...</p>
+                <p class="card-script">Start with the name that's causing trouble</p>
+                <h2 class="title" id="nameTitle">Who is this dangerously charming soul?</h2>
+            </div>
+            <form class="card-body" id="nameForm" novalidate>
+                <label for="userName" class="input-label">Your irresistible name</label>
+                <input type="text" id="userName" class="romantic-input" placeholder="Type your name, heartbreaker..." autocomplete="name" required>
+                <button class="romantic-button" type="submit">Set the Mood</button>
+            </form>
+        </section>
+
+        <section class="card" id="crushCard" data-step="2" aria-labelledby="crushTitle">
+            <div class="card-header">
+                <p class="card-script">Your pulse just got louder</p>
+                <h2 class="title" id="crushTitle">Okay <span id="userName1"></span>... whose name makes you smile for no reason?</h2>
+            </div>
+            <form class="card-body" id="crushForm" novalidate>
+                <p class="romantic-text">Say it in your head once. If your heartbeat speeds up, that's a sign.</p>
+                <label for="crushName" class="input-label">The name you keep replaying</label>
+                <input type="text" id="crushName" class="romantic-input" placeholder="Who has your heart acting dramatic?" autocomplete="off" required>
+                <button class="romantic-button" type="submit">Reveal Their Vibe</button>
+            </form>
+        </section>
+
+        <section class="card" id="quizCard" data-step="3" aria-labelledby="quizTitle">
+            <div class="card-header">
+                <p class="card-script">Chemistry calibration</p>
+                <h2 class="title" id="quizTitle">Three quick questions before fate talks</h2>
+            </div>
+            <form class="card-body" id="quizForm" novalidate>
+                <fieldset class="quiz-group">
+                    <legend>What makes you melt first?</legend>
+                    <label><input type="radio" name="spark" value="eyes" required> Intense eye contact</label>
+                    <label><input type="radio" name="spark" value="banter" required> Playful banter</label>
+                    <label><input type="radio" name="spark" value="voice" required> Their voice note</label>
+                </fieldset>
+
+                <fieldset class="quiz-group">
+                    <legend>Your flirting style?</legend>
+                    <label><input type="radio" name="style" value="soft" required> Soft and subtle</label>
+                    <label><input type="radio" name="style" value="bold" required> Bold and direct</label>
+                    <label><input type="radio" name="style" value="chaos" required> Wild and chaotic</label>
+                </fieldset>
+
+                <fieldset class="quiz-group">
+                    <legend>How should this story unfold?</legend>
+                    <label><input type="radio" name="rhythm" value="slow" required> Slow burn</label>
+                    <label><input type="radio" name="rhythm" value="fast" required> Fast and thrilling</label>
+                    <label><input type="radio" name="rhythm" value="unhinged" required> Pure unpredictability</label>
+                </fieldset>
+
+                <button class="romantic-button" type="submit">Lock My Chemistry</button>
+            </form>
+        </section>
+
+        <section class="card" id="introCard" data-step="4" aria-labelledby="introTitle">
+            <div class="card-header">
+                <p class="card-script">One move. Zero excuses.</p>
+                <h2 class="title" id="introTitle">Let's flirt with fate, <span id="userName2"></span></h2>
             </div>
             <div class="card-body">
                 <div class="game-rules">
-                    <p class="romantic-text">Here's how destiny works:</p>
+                    <p class="romantic-text">Rock, Paper, Scissors becomes prophecy tonight.</p>
                     <ul class="rules-list">
-                        <li>🏆 <strong>If you win:</strong> They're perfect for you!</li>
-                        <li>💔 <strong>If you lose:</strong> Time to let them go...</li>
+                        <li><strong>You win:</strong> chemistry confirmed.</li>
+                        <li><strong>You lose:</strong> the universe says next.</li>
+                        <li><strong>Tie:</strong> your story needs one more chapter.</li>
                     </ul>
-                    <p class="romantic-text small">Trust the universe, <span id="userName2"></span> 💫</p>
+                    <p class="romantic-text small">Relax your shoulders. Pick like you mean it.</p>
                 </div>
-                <button class="romantic-button" onclick="app.startGame()">I'm Ready</button>
+                <button class="romantic-button" id="startGameBtn" type="button">Drop The Verdict</button>
             </div>
-        </div>
+        </section>
 
-        <!-- Step 4: Game Play -->
-        <div class="card" id="gameCard">
+        <section class="card" id="gameCard" data-step="5" aria-labelledby="gameTitle">
             <div class="card-header">
-                <h2 class="title">Choose Your Move</h2>
-                <p class="subtitle">For <span id="crushName1"></span> 💖</p>
+                <p class="card-script">The dangerous moment</p>
+                <h2 class="title" id="gameTitle">Pick your love weapon for <span id="crushName1"></span></h2>
             </div>
             <div class="card-body">
+                <p class="decision-hint" id="decisionHint" aria-live="polite">Choose a move. Make it confident. Make it cute.</p>
                 <div class="game-choices">
-                    <button class="choice-button" onclick="app.playGame('rock')">
+                    <button class="choice-button" type="button" data-choice="rock" data-flirt-hint="Rock says: eye contact, loyalty, and stubborn devotion.">
                         <span class="choice-icon">✊</span>
                         <span class="choice-text">Rock</span>
+                        <span class="choice-subtext">Possessive Energy</span>
                     </button>
-                    <button class="choice-button" onclick="app.playGame('paper')">
+                    <button class="choice-button" type="button" data-choice="paper" data-flirt-hint="Paper says: charm first, chaos later.">
                         <span class="choice-icon">✋</span>
                         <span class="choice-text">Paper</span>
+                        <span class="choice-subtext">Soft Seduction</span>
                     </button>
-                    <button class="choice-button" onclick="app.playGame('scissors')">
+                    <button class="choice-button" type="button" data-choice="scissors" data-flirt-hint="Scissors says: fast heartbeat, bold lips, no fear.">
                         <span class="choice-icon">✌️</span>
                         <span class="choice-text">Scissors</span>
+                        <span class="choice-subtext">Reckless Charm</span>
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Step 5: Result -->
-        <div class="card" id="resultCard">
+        <section class="card reveal-card" id="revealCard" data-step="6" aria-labelledby="revealTitle">
             <div class="card-header">
-                <h2 class="title" id="resultTitle"></h2>
+                <p class="card-script">Destiny is performing</p>
+                <h2 class="title" id="revealTitle">Hold still...</h2>
             </div>
-            <div class="card-body">
-                <div class="result-content">
-                    <div class="game-result">
-                        <div class="choice-display">
-                            <div class="player-choice">
-                                <p>You chose:</p>
-                                <span class="choice-icon-large" id="playerChoice"></span>
-                            </div>
-                            <div class="vs">VS</div>
-                            <div class="computer-choice">
-                                <p>Destiny chose:</p>
-                                <span class="choice-icon-large" id="computerChoice"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="final-message" id="finalMessage"></div>
-                    <button class="romantic-button" onclick="app.restart()">Start Over</button>
+            <div class="card-body reveal-body">
+                <p id="revealLine" class="reveal-line" aria-live="polite">Reading your chemistry...</p>
+                <div class="reveal-meter" aria-hidden="true">
+                    <span></span><span></span><span></span>
                 </div>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <script src="app.js"></script>
+        <section class="card" id="resultCard" data-step="7" aria-labelledby="resultTitle">
+            <div class="card-header">
+                <p class="card-script">Final temptation</p>
+                <h2 class="title" id="resultTitle"></h2>
+            </div>
+            <div class="card-body result-content">
+                <div class="game-result">
+                    <div class="choice-display">
+                        <div class="choice-panel">
+                            <p>You sent</p>
+                            <span class="choice-icon-large" id="playerChoice"></span>
+                        </div>
+                        <div class="vs">✦</div>
+                        <div class="choice-panel">
+                            <p>Destiny replied</p>
+                            <span class="choice-icon-large" id="computerChoice"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="final-message" id="finalMessage" aria-live="polite"></div>
+                <div class="result-actions">
+                    <button class="romantic-button action-share" id="shareBtn" type="button">Share Result</button>
+                    <button class="romantic-button action-download" id="downloadBtn" type="button">Download Card</button>
+                    <button class="romantic-button action-restart" id="restartBtn" type="button">One More Heartbeat</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="sr-only" id="liveRegion" aria-live="polite" aria-atomic="true"></div>
+
+    <script type="module" src="app.js"></script>
 </body>
 </html>
